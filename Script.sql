@@ -9,8 +9,8 @@ UPDATE Invoice  -- Actualizamos la tabla
 SET BillingState = --Configuramos el campo  de eleccion
 Case 
 	When BillingCountry = "USA" THEN "NC"
-	When BillingCountry = "Canada" then "SK"
-	When BillingCountry = "Brazil" then "CE"
+	When BillingCountry = "Canada" then "SK"       - Para cada valor faltante  entonces añadimos un requerimiento 
+	When BillingCountry = "Brazil" then "CE" 
 	when BillingCountry = "Argentina" then "CD"
 	when BillingCountry = "Australia" then "NSW"
 	when BillingCountry = "Austria" then "NÖ"
@@ -23,31 +23,22 @@ END
 WHERE BillingState ISNULL; 
 rollback;
 
-BEGIN TRANSACTION;
-Update Invoice 
-SET BillingPostalCode = 
-case 
-	when BillingCity = "na" then "25721"
-    else "54544"
-end
-where billingPostalCode  = "na"; 
-
-select State  , Country from Customer c group by Country ;
+untry ;
 Begin Transaction;
 ------------------------------------------
 Caso de uso
 UPDATE  Track 
 set Composer =
 case random()  % 4   -- Genera un valor aletorio entre 0 y 8 
-	when 0 then "Nicola compensar"
-	when 1 then "Ana salvarmenta  piijka"
+	when 0 then "REQUERIMIENTO"
+	when 1 then "DMORENO75"
 	when 2 then "Lobito"
-	when 3 then "Conelak kioport"
-	when 4 then "Salome hernandez"
+	when 3 then "aLEJANDRO87MOreno"
+	when 4 then "idkholdin22group"
 	
-	else "Alejito Moreno"
+	else "Alejo Moreno"
 end
-Where Composer ISNULL ;
+Where Composer ISNULL ; --Donde el requerimiento deba registrarse 
 
 rollback;
 
