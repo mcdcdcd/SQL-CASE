@@ -22,10 +22,7 @@ Case
 END
 WHERE BillingState ISNULL; 
 rollback;
-SELECT BillingPostalCode, BillingCity
-FROM Invoice
-WHERE BillingPostalCode IS NULL
-GROUP BY BillingCity;
+
 BEGIN TRANSACTION;
 Update Invoice 
 SET BillingPostalCode = 
