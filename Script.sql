@@ -1,6 +1,12 @@
-begin transaction; 
-UPDATE Invoice 
-SET BillingState =
+En orden de sacar  la mayor informacion posible de nuestros datos, la  limpieza de ellos es  un requisito  indispensable. 
+	Aqui veremos  buenas practicas al momento de  limpiar nuestra data con valores null,
+	Con el objetivo de generar reportes que nos muestre informacion valiosa del negocio. 
+	
+Empezaremos creando una Transaccion con el fin de evitar actualizaciones erroneas en nuestra base de datos.
+
+begin transaction; --Iniciamos Transaccion para garantizar la integridad y consistencia de los datos.
+UPDATE Invoice  -- Actualizamos la tabla
+SET BillingState = --Configuramos el campo  de eleccion
 Case 
 	When BillingCountry = "USA" THEN "NC"
 	When BillingCountry = "Canada" then "SK"
@@ -31,7 +37,8 @@ where billingPostalCode  = "na";
 
 select State  , Country from Customer c group by Country ;
 Begin Transaction;
-
+------------------------------------------
+Caso de uso
 UPDATE  Track 
 set Composer =
 case random()  % 4   -- Genera un valor aletorio entre 0 y 8 
