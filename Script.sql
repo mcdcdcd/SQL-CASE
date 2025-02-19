@@ -1,11 +1,4 @@
--- Data quality is crucial for generating reliable reports and making informed business decisions.
--- One of the most common data cleaning tasks is handling NULL values in a database.
--- This SQL script demonstrates best practices for cleaning missing values while ensuring data integrity using transactions.
-	
---Objective
---Update missing BillingState values based on BillingCountry in the Invoice table.
---Randomly assign Composer values for missing data in the Track table.
---Use transactions to prevent unintended updates and maintain database consistency.
+
 
 begin transaction; 
 --Begin a transaction to ensure data integrity
