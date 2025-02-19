@@ -1,15 +1,20 @@
-En orden de sacar  la mayor informacion posible de nuestros datos, la  limpieza de ellos es  un requisito  indispensable. 
-	Aqui veremos  buenas practicas al momento de  limpiar nuestra data con valores null,
-	Con el objetivo de generar reportes que nos muestre informacion valiosa del negocio. 
+-- Data quality is crucial for generating reliable reports and making informed business decisions.
+-- One of the most common data cleaning tasks is handling NULL values in a database.
+-- This SQL script demonstrates best practices for cleaning missing values while ensuring data integrity using transactions.
 	
-Empezaremos creando una Transaccion con el fin de evitar actualizaciones erroneas en nuestra base de datos.
+--Objective
+--Update missing BillingState values based on BillingCountry in the Invoice table.
+--Randomly assign Composer values for missing data in the Track table.
+--Use transactions to prevent unintended updates and maintain database consistency.
 
-begin transaction; --Iniciamos Transaccion para garantizar la integridad y consistencia de los datos.
-UPDATE Invoice  -- Actualizamos la tabla
-SET BillingState = --Configuramos el campo  de eleccion
+begin transaction; 
+--Begin a transaction to ensure data integrity
+UPDATE Invoice 
+-- Update missing BillingState values based on BillingCountry	
+SET BillingState = 
 Case 
 	When BillingCountry = "USA" THEN "NC"
-	When BillingCountry = "Canada" then "SK"       - Para cada valor faltante  entonces añadimos un requerimiento 
+	When BillingCountry = "Canada" then "SK"      
 	When BillingCountry = "Brazil" then "CE" 
 	when BillingCountry = "Argentina" then "CD"
 	when BillingCountry = "Australia" then "NSW"
@@ -20,16 +25,16 @@ Case
 	when BillingCountry = "United Kingdom" then "LV"
 	else "NA"
 END
-WHERE BillingState ISNULL; 
+WHERE BillingState ISNULL; -- -- Ensure we only update NULL values
 rollback;
-
+-- Update missing Composer values with randomly assigned name
 untry ;
 Begin Transaction;
 ------------------------------------------
 Caso de uso
 UPDATE  Track 
 set Composer =
-case random()  % 4   -- Genera un valor aletorio entre 0 y 8 
+case random()  % 4   -- Generates a random value between 0 and 4 
 	when 0 then "REQUERIMIENTO"
 	when 1 then "DMORENO75"
 	when 2 then "Lobito"
@@ -38,9 +43,7 @@ case random()  % 4   -- Genera un valor aletorio entre 0 y 8
 	
 	else "Alejo Moreno"
 end
-Where Composer ISNULL ; --Donde el requerimiento deba registrarse 
-
+Where Composer ISNULL ; -- Only update NULL composers
 rollback;
-
-
+--Rollback the transaction to prevent permanent changes (for testing)
 
